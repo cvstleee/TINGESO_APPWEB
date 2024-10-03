@@ -25,11 +25,10 @@ public class CostumerHistoryEntity {
     private int numberOfDebts;
     //intereses por pago retrasado de cuotas, debe ser 0 para poder tener el crédito aceptado
     private int moratoriumAmount;
-
-    //le agrego fecha o asumo que es la actual nomas? tipo asumo que se extrae nomas del dicom
-
-
-    //link con usuario
+    //FK's
+    @OneToOne
+    @JoinColumn(name="costumer_id")
+    private CostumerEntity costumer;
 
 
 }

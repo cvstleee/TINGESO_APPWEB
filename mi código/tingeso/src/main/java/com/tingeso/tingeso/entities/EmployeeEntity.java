@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "employee")
 @Data
@@ -22,4 +24,7 @@ public class EmployeeEntity {
     private String email;
 
     //estaría enlazado a solicitudes
+
+    @OneToMany(mappedBy = "employee")
+    private List<CreditRequestEntity> creditRequests;
 }

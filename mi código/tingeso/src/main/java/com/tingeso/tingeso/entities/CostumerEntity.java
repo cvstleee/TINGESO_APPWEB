@@ -1,9 +1,11 @@
 package com.tingeso.tingeso.entities;
-
+import com.tingeso.tingeso.entities.CostumerHistoryEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "costumer")
@@ -21,8 +23,26 @@ public class CostumerEntity {
     private String email;
     private String phone;
     private int age;
-    //duda con este
-    private String document;
+    private int monthlyIncome;
 
-    //fks con income y saving
+    @OneToOne(mappedBy = "costumer")
+    private CostumerHistoryEntity history;
+
+    @OneToMany(mappedBy = "costumer")
+    private List<CostumerJobEntity> costumerJobs;
+
+    @OneToMany(mappedBy = "costumer")
+    private List<CreditRequestEntity> creditRequests;
+
+    @OneToMany(mappedBy = "costumer")
+    private List<SavingAccountEntity> savingAccounts;
+
+    @OneToMany(mappedBy = "costumer")
+    private List<DocumentEntity> documents;
+
+
+
+
+
+
 }

@@ -6,21 +6,29 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "credit")
+@Table(name = "document")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//datos necesarios que da un crédito
-public class CreditEntity {
+public class DocumentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
     private String type;
-    private int deadline;
-    private int interestRate; //anual
-    private int maxAmount;
-    //no sé si es mejor string o lista, que serían como urls o nombres tipo "contrato.pdf"
-    private String docRequirements;
+    private String title;
+
+
+
+
+
+    //FK
+    @ManyToOne
+    @JoinColumn(name="costumer_id")
+    private CostumerEntity costumer;
+
+    @ManyToOne
+    @JoinColumn(name="creditReq_id")
+    private CreditRequestEntity creditRequest;
 
 }

@@ -27,5 +27,8 @@ public class CostumerJobEntity {
     private Date startDate;
     private Date endDate;
 
-    //relación con costumer e income?
+    @ManyToOne
+    @JoinColumn(name="costumer_id")
+    private CostumerEntity costumer;
+
 }
