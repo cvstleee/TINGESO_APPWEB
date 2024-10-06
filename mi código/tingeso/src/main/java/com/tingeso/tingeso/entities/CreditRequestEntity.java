@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Entity
@@ -20,6 +19,7 @@ public class CreditRequestEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
+   // private String status;
     private String type;
     private int deadline;
     private int interestRate; //anual
@@ -39,4 +39,8 @@ public class CreditRequestEntity {
 
     @OneToMany(mappedBy = "creditRequest")
     private List<DocumentEntity> documents;
+
+    @OneToOne
+    @JoinColumn(name="creditEvaluation_id" , referencedColumnName = "id")
+    private CreditEvaluationEntity creditEvaluation;
 }

@@ -19,16 +19,13 @@ public class DocumentEntity {
     private String title;
 
 
-
-
-
     //FK
     @ManyToOne
     @JoinColumn(name="costumer_id")
     private CostumerEntity costumer;
 
     @ManyToOne
-    @JoinColumn(name="creditReq_id")
+    @JoinColumn(name="creditRequest_id")
     private CreditRequestEntity creditRequest;
 
 }

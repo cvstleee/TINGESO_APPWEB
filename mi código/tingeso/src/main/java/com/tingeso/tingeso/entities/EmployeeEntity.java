@@ -27,4 +27,9 @@ public class EmployeeEntity {
 
     @OneToMany(mappedBy = "employee")
     private List<CreditRequestEntity> creditRequests;
+
+    @OneToMany(mappedBy = "employee")
+    private List<CreditEvaluationEntity> creditEvaluations;
+
+
 }

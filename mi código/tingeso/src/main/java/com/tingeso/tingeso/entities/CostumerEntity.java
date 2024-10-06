@@ -1,10 +1,8 @@
 package com.tingeso.tingeso.entities;
-import com.tingeso.tingeso.entities.CostumerHistoryEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Entity
@@ -26,19 +24,23 @@ public class CostumerEntity {
     private int monthlyIncome;
 
     @OneToOne(mappedBy = "costumer")
-    private CostumerHistoryEntity history;
+    private CostumerJobEntity costumerJob;
 
+    @OneToOne(mappedBy = "costumer")
+    private CreditEvaluationEntity creditEvaluation;
+
+    @OneToOne(mappedBy = "costumer")
+    private SavingCapacityEntity savingAccounts;
+
+    //hay que agregar un new?
     @OneToMany(mappedBy = "costumer")
-    private List<CostumerJobEntity> costumerJobs;
+    private List<DocumentEntity> documents;
 
     @OneToMany(mappedBy = "costumer")
     private List<CreditRequestEntity> creditRequests;
 
-    @OneToMany(mappedBy = "costumer")
-    private List<SavingAccountEntity> savingAccounts;
 
-    @OneToMany(mappedBy = "costumer")
-    private List<DocumentEntity> documents;
+
 
 
 

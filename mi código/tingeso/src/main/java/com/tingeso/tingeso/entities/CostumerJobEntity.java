@@ -1,10 +1,8 @@
 package com.tingeso.tingeso.entities;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
 
 
@@ -27,8 +25,8 @@ public class CostumerJobEntity {
     private Date startDate;
     private Date endDate;
 
-    @ManyToOne
-    @JoinColumn(name="costumer_id")
+    @OneToOne
+    @JoinColumn(name = "costumer_id" , referencedColumnName = "id")
     private CostumerEntity costumer;
 
 }
