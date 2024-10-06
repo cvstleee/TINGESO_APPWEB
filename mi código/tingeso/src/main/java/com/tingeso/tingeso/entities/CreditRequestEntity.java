@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,7 +23,7 @@ public class CreditRequestEntity {
     private Long id;
    // private String status;
     private String type;
-    private int deadline;
+    private Date deadline;
     private int interestRate; //anual
     private int maxAmount;
     //no sé si es mejor string o lista, que serían como urls o nombres tipo "contrato.pdf"
