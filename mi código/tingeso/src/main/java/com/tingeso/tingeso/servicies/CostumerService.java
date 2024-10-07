@@ -14,7 +14,7 @@ public class CostumerService {
     CostumerRepository costumerRepository;
 
     public List<CostumerEntity> getCostumers() {
-        return (List<CostumerEntity>) costumerRepository.findAll();
+        return costumerRepository.findAll();
     }
 
     public CostumerEntity saveCostumer(CostumerEntity costumer) {
