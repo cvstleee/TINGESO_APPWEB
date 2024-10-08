@@ -4,8 +4,6 @@ import com.tingeso.tingeso.entities.CostumerEntity;
 import com.tingeso.tingeso.repositories.CostumerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

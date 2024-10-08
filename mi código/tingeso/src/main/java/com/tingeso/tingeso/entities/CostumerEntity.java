@@ -19,12 +19,8 @@ public class CostumerEntity {
     private String name;
     private String lastName;
     private String email;
-    private String phone;
     private int age;
     private int monthlyIncome;
-
-    @OneToOne(mappedBy = "costumer")
-    private CostumerJobEntity costumerJob;
 
     @OneToOne(mappedBy = "costumer")
     private CreditEvaluationEntity creditEvaluation;
@@ -32,7 +28,6 @@ public class CostumerEntity {
     @OneToOne(mappedBy = "costumer")
     private SavingCapacityEntity savingAccounts;
 
-    //hay que agregar un new?
     @OneToMany(mappedBy = "costumer")
     private List<DocumentEntity> documents;
 
