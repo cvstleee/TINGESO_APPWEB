@@ -1,5 +1,6 @@
 package com.tingeso.tingeso.controllers;
 
+import com.tingeso.tingeso.entities.CostumerEntity;
 import com.tingeso.tingeso.entities.CreditRequestEntity;
 import com.tingeso.tingeso.servicies.CreditRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,8 @@ public class CreditRequestController {
     }
 
     @PutMapping("/calculateTotalCost/{id}")
-    public ResponseEntity<CreditRequestEntity> calculateTotalCost(@RequestBody Long id, int percentage, int fireInsurance, int monthsOfDeadline){
-         creditRequestService.totalCosts(id, percentage, fireInsurance, monthsOfDeadline);
+    public ResponseEntity<CreditRequestEntity> calculateTotalCost(@RequestBody CostumerEntity costumer, int percentage, int fireInsurance, int monthsOfDeadline){
+         creditRequestService.totalCosts(costumer, percentage, fireInsurance, monthsOfDeadline);
         return ResponseEntity.noContent().build();
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 public interface CreditRequestRepository extends JpaRepository<CreditRequestEntity, Long> {
 //    public CreditRequestEntity findByCreditRequestId(Long creditRequestId);
     public List<CreditRequestEntity> findByType(String type);
-    public List<CreditRequestEntity> findByDeadline(Date deadline);
-    public CreditRequestEntity findByCostumer(Long id);
+    public List<CreditRequestEntity> findByDeadline(int deadline);
+    public CreditRequestEntity findByCostumer(CostumerEntity costumer);
 
 }

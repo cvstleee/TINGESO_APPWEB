@@ -1,5 +1,6 @@
 package com.tingeso.tingeso.servicies;
 
+import com.tingeso.tingeso.entities.CostumerEntity;
 import com.tingeso.tingeso.entities.CreditRequestEntity;
 import com.tingeso.tingeso.repositories.CreditRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,22 +43,25 @@ public class CreditRequestService {
     }
 
     //me va a GUARDAR los datos de cada método del otro service en la entidad de
-    public void totalCosts(Long id, int percentage, int fireInsurance, int monthsOfDeadline){
-        int monthDebth = creditSimulationService.simulationDebt(creditRequestRepository.findByCostumer(id).getCreditAmount(), creditRequestRepository.findByCostumer(id).getInterestRateYear(), creditRequestRepository.findByCostumer(id).getDeadline());
-        creditRequestRepository.findByCostumer(id).setMonthDebth(monthDebth);
+    public void totalCosts(CostumerEntity costumer, int percentage, int fireInsurance, int monthsOfDeadline){
+
+        int monthDebth = creditSimulationService.simulationDebt(creditRequestRepository.findByCostumer(costumer).getCreditAmount(),
+                creditRequestRepository.findByCostumer(costumer).getInterestRateYear(), creditRequestRepository.findByCostumer(costumer).getDeadline());
+
+        creditRequestRepository.findByCostumer(costumer).setMonthDebth(monthDebth);
 
         int lifeInsurance = totalCostService.calculateLifeInsurance(monthDebth, percentage);
-        creditRequestRepository.findByCostumer(id).setLifeInsurance(lifeInsurance);
+        creditRequestRepository.findByCostumer(costumer).setLifeInsurance(lifeInsurance);
 
 
         int admiFee = totalCostService.calculateAdmiFee(monthDebth, percentage);
-        creditRequestRepository.findByCostumer(id).setAdministrationFee(admiFee);
+        creditRequestRepository.findByCostumer(costumer).setAdministrationFee(admiFee);
 
         int monthCost = totalCostService.monthlyCost(monthDebth, lifeInsurance, fireInsurance);
-        creditRequestRepository.findByCostumer(id).setMonthCost(monthCost);
+        creditRequestRepository.findByCostumer(costumer).setMonthCost(monthCost);
 
-        int totalCost = totalCostService.totalCost(monthDebth,creditRequestRepository.findByCostumer(id).getDeadline(), admiFee);
-        creditRequestRepository.findByCostumer(id).setTotalCost(totalCost);
+        int totalCost = totalCostService.totalCost(monthDebth,creditRequestRepository.findByCostumer(costumer).getDeadline(), admiFee);
+        creditRequestRepository.findByCostumer(costumer).setTotalCost(totalCost);
 
     }
 }
