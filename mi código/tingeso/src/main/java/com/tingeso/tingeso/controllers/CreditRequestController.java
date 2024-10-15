@@ -46,4 +46,10 @@ public class CreditRequestController {
 
     }
 
+    @PutMapping("/calculateTotalCost/{id}")
+    public ResponseEntity<CreditRequestEntity> calculateTotalCost(@RequestBody Long id, int percentage, int fireInsurance, int monthsOfDeadline){
+         creditRequestService.totalCosts(id, percentage, fireInsurance, monthsOfDeadline);
+        return ResponseEntity.noContent().build();
+    }
+
 }

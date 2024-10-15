@@ -26,14 +26,14 @@ public class TotalCostService {
     //3. cálculo por comisión de administración
     //ES IGUAL AL OTRO, VER SI JUNTARLOS
     public int calculateAdmiFee (int monthDebth, float percentage){
-        float lifeInsurance;
+        float admiFee;
         float percentage100;
 
         percentage100 = percentage / 100;
 
-        lifeInsurance = monthDebth * percentage100;
+        admiFee = monthDebth * percentage100;
 
-        return (int) lifeInsurance;
+        return (int) admiFee;
     }
 
     //4. cálculo del costo total del préstamo

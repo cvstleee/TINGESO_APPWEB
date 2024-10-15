@@ -1,5 +1,6 @@
 package com.tingeso.tingeso.repositories;
 
+import com.tingeso.tingeso.entities.CostumerEntity;
 import com.tingeso.tingeso.entities.CreditRequestEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,5 +13,6 @@ public interface CreditRequestRepository extends JpaRepository<CreditRequestEnti
 //    public CreditRequestEntity findByCreditRequestId(Long creditRequestId);
     public List<CreditRequestEntity> findByType(String type);
     public List<CreditRequestEntity> findByDeadline(Date deadline);
+    public CreditRequestEntity findByCostumer(Long id);
 
 }

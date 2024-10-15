@@ -11,6 +11,10 @@ import java.util.List;
 public class CreditRequestService {
     @Autowired
     CreditRequestRepository creditRequestRepository;
+    @Autowired
+    TotalCostService totalCostService;
+    @Autowired
+    CreditSimulationService creditSimulationService;
 
     public List<CreditRequestEntity> getCreditRequests() {
         return creditRequestRepository.findAll();
@@ -35,5 +39,25 @@ public class CreditRequestService {
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
+    }
+
+    //me va a GUARDAR los datos de cada método del otro service en la entidad de
+    public void totalCosts(Long id, int percentage, int fireInsurance, int monthsOfDeadline){
+        int monthDebth = creditSimulationService.simulationDebt(creditRequestRepository.findByCostumer(id).getCreditAmount(), creditRequestRepository.findByCostumer(id).getInterestRateYear(), creditRequestRepository.findByCostumer(id).getDeadline());
+        creditRequestRepository.findByCostumer(id).setMonthDebth(monthDebth);
+
+        int lifeInsurance = totalCostService.calculateLifeInsurance(monthDebth, percentage);
+        creditRequestRepository.findByCostumer(id).setLifeInsurance(lifeInsurance);
+
+
+        int admiFee = totalCostService.calculateAdmiFee(monthDebth, percentage);
+        creditRequestRepository.findByCostumer(id).setAdministrationFee(admiFee);
+
+        int monthCost = totalCostService.monthlyCost(monthDebth, lifeInsurance, fireInsurance);
+        creditRequestRepository.findByCostumer(id).setMonthCost(monthCost);
+
+        int totalCost = totalCostService.totalCost(monthDebth,creditRequestRepository.findByCostumer(id).getDeadline(), admiFee);
+        creditRequestRepository.findByCostumer(id).setTotalCost(totalCost);
+
     }
 }
