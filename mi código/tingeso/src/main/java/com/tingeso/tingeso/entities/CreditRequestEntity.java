@@ -1,5 +1,6 @@
 package com.tingeso.tingeso.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,16 +42,20 @@ public class CreditRequestEntity {
 
     @ManyToOne
     @JoinColumn(name="costumer_id")
+    @JsonIgnore
     private CostumerEntity costumer;
 
     @ManyToOne
     @JoinColumn(name="employee_id")
+    @JsonIgnore
     private EmployeeEntity employee;
 
     @OneToMany(mappedBy = "creditRequest")
+    @JsonIgnore
     private List<DocumentEntity> documents;
 
     @OneToOne
     @JoinColumn(name="creditEvaluation_id" , referencedColumnName = "id")
+    @JsonIgnore
     private CreditEvaluationEntity creditEvaluation;
 }

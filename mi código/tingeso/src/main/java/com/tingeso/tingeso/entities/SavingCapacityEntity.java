@@ -1,4 +1,5 @@
 package com.tingeso.tingeso.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,9 +33,11 @@ public class SavingCapacityEntity {
 
     @OneToOne
     @JoinColumn(name = "costumer_id" , referencedColumnName = "id")
+    @JsonIgnore
     private CostumerEntity costumer;
 
     @OneToOne
     @JoinColumn(name="creditEvaluation_id" , referencedColumnName = "id")
+    @JsonIgnore
     private CreditEvaluationEntity creditEvaluation;
 }

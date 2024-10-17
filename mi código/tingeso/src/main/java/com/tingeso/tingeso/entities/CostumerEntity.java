@@ -1,4 +1,5 @@
 package com.tingeso.tingeso.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,23 +24,23 @@ public class CostumerEntity {
     private int monthlyIncome;
 
     @OneToOne(mappedBy = "costumer")
+    //@JsonIgnore
     private CreditEvaluationEntity creditEvaluation;
 
+    //mostrar id
+    /**@Transient
+    private Long creditEvaluationId;**/
+
     @OneToOne(mappedBy = "costumer")
+    @JsonIgnore
     private SavingCapacityEntity savingAccounts;
 
     @OneToMany(mappedBy = "costumer")
+    //@JsonIgnore
     private List<DocumentEntity> documents;
 
     @OneToMany(mappedBy = "costumer")
+    //@JsonIgnore
     private List<CreditRequestEntity> creditRequests;
-
-
-
-
-
-
-
-
 
 }
