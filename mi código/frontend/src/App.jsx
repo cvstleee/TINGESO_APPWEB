@@ -1,14 +1,26 @@
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import './App.css'
 import Home from './components/Home'
 import Navbar from './components/Navbar'
+import NotFound from './components/NotFound'
+import RegisterUser from './components/RegisterUser'
+import RegisterEmployee from './components/RegisterEmployee'
 //componente react
 
 function App() {
-  return <div className="App">
-    <Navbar />
-    <h1>Solicitud de Créditos Presta Banco</h1>
-    <Home />
-  </div>
+  return (
+    <Router>
+      <div className="container">
+      <Navbar></Navbar>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/registerUser" element={<RegisterUser />} />
+        <Route path="/registerEmployee" element={<RegisterEmployee />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App
