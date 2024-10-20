@@ -5,7 +5,9 @@ import Navbar from './components/Navbar'
 import NotFound from './components/NotFound'
 import RegisterUser from './components/RegisterUser'
 import RegisterEmployee from './components/RegisterEmployee'
-//componente react
+import Simulation from './components/Simulation'
+import CreditRequest from './components/CreditRequest'
+import CreditEvaluation from './components/CreditEvaluation'
 
 function App() {
   return (
@@ -16,6 +18,9 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/registerUser" element={<RegisterUser />} />
         <Route path="/registerEmployee" element={<RegisterEmployee />} />
+        <Route path="/simulation" element={<Simulation />} />
+        <Route path="/creditRequest" element={<CreditRequest />} />
+        <Route path="/creditEvaluation" element={<CreditEvaluation />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       </div>
