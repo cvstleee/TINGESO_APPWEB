@@ -8,6 +8,7 @@ import RegisterEmployee from './components/RegisterEmployee'
 import Simulation from './components/Simulation'
 import CreditRequest from './components/CreditRequest'
 import CreditEvaluation from './components/CreditEvaluation'
+import EmployeeList from './components/EmployeeList'
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/registerUser" element={<RegisterUser />} />
         <Route path="/registerEmployee" element={<RegisterEmployee />} />
+        <Route path="/employee/list" element={<EmployeeList/>} />
+        <Route path="/employee/add" element={<EmployeeList/>} />
+        <Route path="/employee/edit/:id" element={<EmployeeList/>} />
         <Route path="/simulation" element={<Simulation />} />
         <Route path="/creditRequest" element={<CreditRequest />} />
         <Route path="/creditEvaluation" element={<CreditEvaluation />} />
