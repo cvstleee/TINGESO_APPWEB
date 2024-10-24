@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import costumerService from '../services/costumer.service'; // Asegúrate de que este servicio esté correctamente implementado
+import employeeService from '../services/employee.service';
 
 const CreditRequest = () => {
   // Estado para almacenar los valores del formulario
   const [formData, setFormData] = useState({
+    costumerId: '', // ID del cliente
+    employeeId: '', // ID del empleado (si es necesario)
     type: '',
     creditAmount: '',
     monthDebth: '',
@@ -21,7 +25,8 @@ const CreditRequest = () => {
   // Estado para almacenar el resultado de la solicitud
   const [savedRequest, setSavedRequest] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [costumers, setCostumers] = useState([]);
+  const [employees, setEmployees] = useState([]);
   // Función para manejar cambios en los inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,7 +42,7 @@ const CreditRequest = () => {
 
     try {
       // Enviar la solicitud POST a la API
-      const response = await fetch('http://localhost:3000/api/credit-requests', { // Cambia a tu URL real
+      const response = await fetch('http://localhost:8090/creditRequest/', { // Cambia a tu URL real
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -60,10 +65,61 @@ const CreditRequest = () => {
     }
   };
 
+  const init = async () => {
+    try {
+      const costumerResponse = await costumerService.getAll();
+      console.log("Mostrando listado de todos los clientes.", costumerResponse.data);
+      setCostumers(costumerResponse.data); // Establece los clientes
+
+      const employeeResponse = await employeeService.getAll();
+      console.log("Mostrando listado de todos los empleados.", employeeResponse.data);
+      setEmployees(employeeResponse.data); // Establece los empleados
+
+    } catch (error) {
+      console.error("Se ha producido un error al intentar mostrar listado de clientes o empleados.", error);
+    }
+  };
+
+  useEffect(() => {
+    init(); // Llama a la función init al montar el componente
+  }, []);
+
   return (
     <div>
       <h1>Solicitud de Crédito</h1>
       <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="costumerId">Cliente:</label>
+          <select 
+            id="costumerId" 
+            name="costumerId" 
+            value={formData.costumerId || ''} 
+            onChange={handleChange} 
+            required 
+          >
+            <option value="">Seleccione su nombre</option>
+            {costumers.map(costumer => (
+              <option key={costumer.id} value={costumer.id}>{costumer.name} {costumer.lastName}</option> 
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="employeeId">Empleado:</label>
+          <select 
+            id="employeeId" 
+            name="employeeId" 
+            value={formData.employeeId || ''} 
+            onChange={handleChange} 
+            required 
+          >
+            <option value="">Seleccione nombre ejecutivo</option>
+            {employees.map(employee => (
+              <option key={employee.id} value={employee.id}>{employee.firstName} {employee.lastName}</option> 
+            ))}
+          </select>
+        </div>
+
         <div>
           <label htmlFor="type">Tipo:</label>
           <select 
@@ -80,6 +136,7 @@ const CreditRequest = () => {
             <option value="Propiedad Comercial">Propiedad Comercial</option>
           </select>
         </div>
+
         <div>
           <label htmlFor="creditAmount">Monto del Préstamo:</label>
           <input 
@@ -91,6 +148,7 @@ const CreditRequest = () => {
             required 
           />
         </div>
+
         <div>
           <label htmlFor="monthDebth">Meses de Deuda:</label>
           <input 
@@ -102,6 +160,7 @@ const CreditRequest = () => {
             required 
           />
         </div>
+
         <div>
           <label htmlFor="deadline">Plazo en Meses:</label>
           <input 
@@ -113,6 +172,7 @@ const CreditRequest = () => {
             required 
           />
         </div>
+
         <div>
           <label htmlFor="interestRateYear">Tasa de Interés Anual:</label>
           <input 
@@ -124,6 +184,7 @@ const CreditRequest = () => {
             required 
           />
         </div>
+
         <div>
           <label htmlFor="interestRateMonth">Tasa de Interés Mensual:</label>
           <input 
@@ -135,6 +196,7 @@ const CreditRequest = () => {
             required 
           />
         </div>
+
         <div>
           <label htmlFor="maxAmount">Monto Máximo:</label>
           <input 
@@ -142,20 +204,21 @@ const CreditRequest = () => {
             id="maxAmount" 
             name="maxAmount" 
             value={formData.maxAmount} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
-        <div>
-          <label htmlFor="lifeInsurance">Seguro de Vida:</label>
-          <input 
-            type="number" 
-            id="lifeInsurance" 
-            name="lifeInsurance" 
-            value={formData.lifeInsurance} 
             onChange={handleChange}  
            />
          </div>
+
+         <div>
+           <label htmlFor="lifeInsurance">Seguro de Vida:</label>
+           <input 
+             type="number"  
+             id="lifeInsurance"
+             name="lifeInsurance"
+             value={formData.lifeInsurance}
+             onChange={handleChange}
+           />
+         </div>
+
          <div>
            <label htmlFor="fireInsurance">Seguro Contra Incendios:</label>
            <input
@@ -166,6 +229,7 @@ const CreditRequest = () => {
              onChange={handleChange}
            />
          </div>  
+
          <div>
            <label htmlFor="administrationFee">Comisión de Administración:</label>
            <input
@@ -177,6 +241,7 @@ const CreditRequest = () => {
              required
            />
          </div>  
+
          <div>
            <label htmlFor="monthCost">Costo Mensual:</label>
            <input
@@ -188,6 +253,7 @@ const CreditRequest = () => {
              required
            />
          </div>  
+
          <div>
            <label htmlFor="totalCost">Costo Total:</label>
            <input
@@ -199,6 +265,7 @@ const CreditRequest = () => {
              required
            />
          </div>  
+
          <div>
            <label htmlFor="docRequirements">Documentos Requeridos:</label>
            <input
