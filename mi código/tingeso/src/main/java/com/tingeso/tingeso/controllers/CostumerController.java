@@ -51,7 +51,7 @@ public class CostumerController {
     //y si hago aqui la llamada a la simulación en caso de que el usuario lo quiera?
 
     @GetMapping("/simulate")
-    public int simulation(@RequestParam("P") int P, @RequestParam("r") float r, @RequestParam("n") int n){
+    public int simulation(@RequestParam("P") int P, @RequestParam("r") double r, @RequestParam("n") int n){
         return creditSimulationService.simulationDebt(P, r, n);
     }
     /**
