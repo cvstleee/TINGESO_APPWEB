@@ -22,22 +22,27 @@ public class CreditRequestEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-   // private String status;
+   //tipo de préstamo
     private String type;
     //monto del prestamo
     private int creditAmount;
+    //cuota mensual del préstamo, se calcula con la formula del simulation (NO SE RECIBE DEL CLIENTE)
     private int monthDebth;
+    //plazo, lo indica el ejecutivo según el máximo dispo en la tabla
     private int deadline; //plazo en meses, si son 20 años 240 meses
+    //ejecutivo lo indica según tabla
     private int interestRateYear; //anual
     private int interestRateMonth;
     private int maxAmount;
+    //lo indica cliente
     private int lifeInsurance;
     private int fireInsurance;
+    //se obtienen de costos totales
     private int administrationFee;
     private int monthCost;
     private int totalCost;
-    //no sé si es mejor string o lista, que serían como urls o nombres tipo "contrato.pdf"
-    private String docRequirements;
+
+    //prácticamente de cliente se obtiene el tipo, plazo (dentro del max), tasa interes anual (dentro del rango) life insurance, fire insurance y los documentos
 
 
     @ManyToOne

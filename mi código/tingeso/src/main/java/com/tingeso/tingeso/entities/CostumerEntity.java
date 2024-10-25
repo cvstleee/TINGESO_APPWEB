@@ -27,17 +27,13 @@ public class CostumerEntity {
     //@JsonIgnore
     private CreditEvaluationEntity creditEvaluation;
 
-    //mostrar id
-    /**@Transient
-    private Long creditEvaluationId;**/
-
     @OneToOne(mappedBy = "costumer")
     @JsonIgnore
     private SavingCapacityEntity savingAccounts;
 
-    @OneToMany(mappedBy = "costumer")
+    /**@OneToMany(mappedBy = "costumer")
     //@JsonIgnore
-    private List<DocumentEntity> documents;
+    private List<DocumentEntity> documents;**/
 
     @OneToMany(mappedBy = "costumer")
     //@JsonIgnore
