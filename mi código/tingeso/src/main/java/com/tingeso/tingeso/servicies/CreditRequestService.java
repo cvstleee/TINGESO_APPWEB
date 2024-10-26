@@ -1,15 +1,24 @@
 package com.tingeso.tingeso.servicies;
 
+import com.tingeso.tingeso.DTO.CreditRequest;
 import com.tingeso.tingeso.entities.CostumerEntity;
 import com.tingeso.tingeso.entities.CreditRequestEntity;
+import com.tingeso.tingeso.entities.EmployeeEntity;
+import com.tingeso.tingeso.repositories.CostumerRepository;
 import com.tingeso.tingeso.repositories.CreditRequestRepository;
+import com.tingeso.tingeso.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CreditRequestService {
+    @Autowired
+    CostumerRepository costumerRepository;
+    @Autowired
+    EmployeeRepository employeeRepository;
     @Autowired
     CreditRequestRepository creditRequestRepository;
     @Autowired
@@ -21,7 +30,32 @@ public class CreditRequestService {
         return creditRequestRepository.findAll();
     }
 
-    public CreditRequestEntity saveCreditRequest(CreditRequestEntity creditRequestEntity) {
+    public CreditRequestEntity saveCreditRequest(CreditRequest creditRequest) {
+        System.out.println(creditRequest);
+        CreditRequestEntity creditRequestEntity = new CreditRequestEntity();
+        Optional<CostumerEntity> costumerEntity = costumerRepository.findById(creditRequest.getCostumerId());
+        if (costumerEntity.isEmpty()) {
+            return null;
+        }
+
+        Optional<EmployeeEntity> employeeEntity = employeeRepository.findById(creditRequest.getEmployeeId());
+        if (employeeEntity.isEmpty()) {
+            return null;
+        }
+
+        creditRequestEntity.setCostumer(costumerEntity.get());
+        creditRequestEntity.setEmployee(employeeEntity.get());
+        creditRequestEntity.setType(creditRequest.getType());
+        creditRequestEntity.setCreditAmount(creditRequest.getCreditAmount());
+        creditRequestEntity.setDeadline(creditRequest.getDeadline());
+        creditRequestEntity.setInterestRateYear(creditRequest.getInterestRateYear());
+        creditRequestEntity.setMaxAmount(creditRequest.getMaxAmount());
+        creditRequestEntity.setAdministrationFee(0);
+        creditRequestEntity.setMonthCost(0);
+        creditRequestEntity.setTotalCost(0);
+        creditRequestEntity.setInterestRateMonth(0);
+        creditRequestEntity.setLifeInsurance(0);
+        creditRequestEntity.setFireInsurance(0);
         return creditRequestRepository.save(creditRequestEntity);
     }
 

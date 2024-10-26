@@ -1,11 +1,13 @@
 package com.tingeso.tingeso.controllers;
 
+import com.tingeso.tingeso.DTO.CreditRequest;
 import com.tingeso.tingeso.entities.CostumerEntity;
 import com.tingeso.tingeso.entities.CreditRequestEntity;
 import com.tingeso.tingeso.servicies.CreditRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class CreditRequestController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CreditRequestEntity> saveCreditRequest(@RequestBody CreditRequestEntity creditRequest) {
+    public ResponseEntity<CreditRequestEntity> saveCreditRequest(@RequestBody CreditRequest creditRequest) {
         CreditRequestEntity creditRequestEntity = creditRequestService.saveCreditRequest(creditRequest);
         return ResponseEntity.ok(creditRequestEntity);
     }
