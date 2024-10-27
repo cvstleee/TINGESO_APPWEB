@@ -1,5 +1,6 @@
 package com.tingeso.tingeso.controllers;
 
+import com.tingeso.tingeso.DTO.Document;
 import com.tingeso.tingeso.entities.DocumentEntity;
 import com.tingeso.tingeso.servicies.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +38,27 @@ public class DocumentController {
 
     @PostMapping("/")
     public ResponseEntity<DocumentEntity> saveDocument(@RequestParam("file") MultipartFile file,
-                                                 @RequestParam("type") String type,
-                                                 @RequestParam("title") String title) {
+                                                       @RequestParam("type") String type,
+                                                       @RequestParam("title") String title,
+                                                       @RequestParam("creditRequestId") Long creditRequestId) {
         try {
-            DocumentEntity document = new DocumentEntity();
+            // Crear un objeto Document y establecer sus propiedades
+            Document document = new Document();
             document.setType(type);
             document.setTitle(title);
-            document.setFile(file.getBytes()); // Guarda el contenido del archivo
+            document.setCreditRequestId(creditRequestId); // Establecer el ID de la solicitud de crédito
 
-            documentService.saveDocument(document); // Guarda el documento en la base de datos
+            // Guardar el contenido del archivo en el objeto Document (si es necesario)
+            document.setFile(file.getBytes()); // Asegúrate de que tu clase Document tenga un campo para esto
 
-            return ResponseEntity.ok(document);
+            // Llamar al servicio para guardar el documento
+            DocumentEntity savedDocument = documentService.saveDocument(document);
+
+            if (savedDocument == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Si no se encuentra la solicitud de crédito
+            }
+
+            return ResponseEntity.ok(savedDocument);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

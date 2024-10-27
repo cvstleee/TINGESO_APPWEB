@@ -22,7 +22,6 @@ const DocumentUpload = ({ creditRequestId }) => {
         // Agrega tipo, título y ID de la solicitud de crédito
         formData.append('type', type);
         formData.append('title', title);
-        //pero no es pasarle la id, si no el objeto completo...
         formData.append('creditRequestId', creditRequestId); // Este es para asociar con la solicitud
 
         try {

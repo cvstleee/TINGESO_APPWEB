@@ -30,12 +30,6 @@ public class SavingCapacityEntity {
     //si se cumple con todos los puntos o no
     private boolean statusSavingCapacity;
 
-
-    @OneToOne
-    @JoinColumn(name = "costumer_id" , referencedColumnName = "id")
-    @JsonIgnore
-    private CostumerEntity costumer;
-
     @OneToOne
     @JoinColumn(name="creditEvaluation_id" , referencedColumnName = "id")
     @JsonIgnore

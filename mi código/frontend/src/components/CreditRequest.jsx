@@ -12,8 +12,6 @@ const CreditRequest = () => {
         deadline: '',
         interestRateYear: '',
         maxAmount: '',
-        lifeInsurance: '',
-        fireInsurance: '',
     });
 
     const [savedRequest, setSavedRequest] = useState(null);
@@ -176,27 +174,6 @@ const CreditRequest = () => {
                     />
                 </div>
 
-                <div>
-                    <label htmlFor="lifeInsurance">Seguro de Vida:</label>
-                    <input 
-                        type="number"  
-                        id="lifeInsurance"
-                        name="lifeInsurance"
-                        value={formData.lifeInsurance}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="fireInsurance">Seguro Contra Incendios:</label>
-                    <input
-                        type="number"
-                        id="fireInsurance"
-                        name="fireInsurance"
-                        value={formData.fireInsurance}
-                        onChange={handleChange}
-                    />
-                </div>  
 
                 {/* Agrega un botón para enviar */}
                 <button type='submit'>Guardar Solicitud</button>
@@ -217,7 +194,7 @@ const CreditRequest = () => {
                          <p key={key}><strong>{key}:</strong> {value}</p>)
                      ))}
                     
-                     {/* Aquí se pasa el ID de la solicitud guardada al componente DocumentUploader */}
+                     {/* Aquí se pasa el ID de la solicitud guardada al componente DocumentUpload */}
                      <DocumentUpload creditRequestId={savedRequest.id} />
                  </div>
              )}

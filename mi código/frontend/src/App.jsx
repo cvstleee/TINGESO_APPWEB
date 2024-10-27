@@ -9,6 +9,8 @@ import Simulation from './components/Simulation'
 import CreditRequest from './components/CreditRequest'
 import CreditEvaluation from './components/CreditEvaluation'
 import EmployeeList from './components/EmployeeList'
+import SavingCapacity from './components/SavingCapacity'
+
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/simulation" element={<Simulation />} />
         <Route path="/creditRequest" element={<CreditRequest />} />
         <Route path="/creditEvaluation" element={<CreditEvaluation />} />
+        <Route path="/savingCapacity" element={<SavingCapacity />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       </div>

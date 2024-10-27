@@ -27,10 +27,6 @@ public class CostumerEntity {
     //@JsonIgnore
     private CreditEvaluationEntity creditEvaluation;
 
-    @OneToOne(mappedBy = "costumer")
-    @JsonIgnore
-    private SavingCapacityEntity savingAccounts;
-
     /**@OneToMany(mappedBy = "costumer")
     //@JsonIgnore
     private List<DocumentEntity> documents;**/

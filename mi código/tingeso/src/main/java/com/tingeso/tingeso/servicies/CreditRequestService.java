@@ -31,7 +31,7 @@ public class CreditRequestService {
     }
 
     public CreditRequestEntity saveCreditRequest(CreditRequest creditRequest) {
-        System.out.println(creditRequest);
+        //System.out.println(creditRequest);
         CreditRequestEntity creditRequestEntity = new CreditRequestEntity();
         Optional<CostumerEntity> costumerEntity = costumerRepository.findById(creditRequest.getCostumerId());
         if (costumerEntity.isEmpty()) {
@@ -76,7 +76,6 @@ public class CreditRequestService {
         }
     }
 
-    //me va a GUARDAR los datos de cada método del otro service en la entidad de
     public void totalCosts(CostumerEntity costumer, int percentage, int fireInsurance, int monthsOfDeadline){
 
         int monthDebth = creditSimulationService.simulationDebt(creditRequestRepository.findByCostumer(costumer).getCreditAmount(),
