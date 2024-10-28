@@ -42,6 +42,12 @@ public class CreditRequestController {
         return ResponseEntity.ok(creditRequestUpdated);
     }
 
+    @PutMapping("/status")
+    public ResponseEntity<CreditRequestEntity> updateCreditRequestStatus(@RequestBody CreditRequestEntity creditRequest, String status) {
+        creditRequest.setStatus(status);
+        return ResponseEntity.ok(creditRequestService.updateCreditRequest(creditRequest));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<CreditRequestEntity> deleteCreditRequest(@PathVariable Long id) throws Exception{
         var isDeleted = creditRequestService.deleteCreditRequest(id);

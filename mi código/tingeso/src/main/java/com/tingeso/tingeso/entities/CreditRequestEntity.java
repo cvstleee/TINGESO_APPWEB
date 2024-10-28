@@ -22,6 +22,8 @@ public class CreditRequestEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
+    //estado de la solicitud
+    private String status;
    //tipo de préstamo
     private String type;
     //monto del prestamo

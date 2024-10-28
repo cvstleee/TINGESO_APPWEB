@@ -19,4 +19,13 @@ const update = data => {
 const remove = id => {
     return httpClient.delete(`/creditRequest/${id}`);
 }
-export default { getAll, create, get, update, remove };
+
+const updateStatus = data => {
+    return httpClient.put('/creditRequest/status', data);
+}
+
+const totalCost = data => {
+    return httpClient.put(`/creditRequest/calculateTotalCost/${id}`, data);
+}
+
+export default { getAll, create, get, update, remove, totalCost, updateStatus };

@@ -10,7 +10,7 @@ import CreditRequest from './components/CreditRequest'
 import CreditEvaluation from './components/CreditEvaluation'
 import EmployeeList from './components/EmployeeList'
 import SavingCapacity from './components/SavingCapacity'
-
+import TrackingCredit from './components/TrackingCredit'
 
 function App() {
   return (
@@ -28,6 +28,7 @@ function App() {
         <Route path="/creditRequest" element={<CreditRequest />} />
         <Route path="/creditEvaluation" element={<CreditEvaluation />} />
         <Route path="/savingCapacity" element={<SavingCapacity />} />
+        <Route path="/tracking" element={<TrackingCredit />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
