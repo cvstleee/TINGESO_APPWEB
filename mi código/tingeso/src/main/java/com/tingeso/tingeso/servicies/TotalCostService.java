@@ -45,7 +45,8 @@ public class TotalCostService {
 
     //total durante la vida del préstamo
 
-    public int totalCost(int monthDebth, int monthsOfDeadline, int admiFee){
+    public int totalCost(int monthDebth, int deadline, int admiFee){
+        int monthsOfDeadline = deadline * 12;
         return (monthDebth * monthsOfDeadline) + admiFee;
     }
 

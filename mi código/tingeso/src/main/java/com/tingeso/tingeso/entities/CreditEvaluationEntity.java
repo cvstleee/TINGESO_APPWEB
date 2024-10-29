@@ -23,6 +23,7 @@ public class CreditEvaluationEntity {
     private Long id;
     //Reglas de negocio
     private boolean relationshipFeeIncome;
+    private boolean appropiateAge;
     private boolean historyDICOM;
     private boolean antiquity;
     private boolean relationshipDebtIncome;
@@ -45,11 +46,6 @@ public class CreditEvaluationEntity {
     @JsonIgnore
     @JoinColumn(name = "creditRequest_id" , referencedColumnName = "id")
     private CreditRequestEntity creditRequest;
-
-    @OneToOne
-    @JsonIgnore
-    @JoinColumn(name = "savingCapacity_id" , referencedColumnName = "id")
-    private SavingCapacityEntity savingCapacity;
 
     @ManyToOne
     @JsonIgnore

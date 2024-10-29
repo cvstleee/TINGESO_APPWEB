@@ -1,5 +1,6 @@
 package com.tingeso.tingeso.repositories;
 
+import com.tingeso.tingeso.DTO.CreditEvaluation;
 import com.tingeso.tingeso.entities.CreditEvaluationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,5 +16,6 @@ public interface CreditEvaluationRepository extends JpaRepository<CreditEvaluati
     public CreditEvaluationEntity findByRelationshipDebtIncome(boolean relationship);
     public CreditEvaluationEntity findBySavingsCapacity(boolean savingsCapacity);
     public CreditEvaluationEntity findByStatusEvaluation(boolean statusEvaluation);
+    public boolean existsByCreditRequestId(long creditRequestId);
 
 }

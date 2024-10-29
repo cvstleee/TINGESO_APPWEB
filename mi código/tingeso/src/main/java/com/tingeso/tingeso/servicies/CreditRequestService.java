@@ -67,6 +67,12 @@ public class CreditRequestService {
         return creditRequestRepository.save(creditRequestEntity);
     }
 
+    public CreditRequestEntity updateStatus(Long id, String status) {
+        CreditRequestEntity creditRequestEntity = getById(id);
+        creditRequestEntity.setStatus(status);
+        return creditRequestRepository.save(creditRequestEntity);
+    }
+
 
     public boolean deleteCreditRequest(Long id) throws Exception {
         try {

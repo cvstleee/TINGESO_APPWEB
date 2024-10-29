@@ -20,8 +20,12 @@ const remove = id => {
     return httpClient.delete(`/creditRequest/${id}`);
 }
 
-const updateStatus = data => {
-    return httpClient.put('/creditRequest/status', data);
+const updateStatus = (creditRequest, status) => {
+    // Set the status on the creditRequest object
+    creditRequest.status = status;
+
+    // Send the PUT request
+    return httpClient.put('/creditRequest/status', creditRequest);
 }
 
 const totalCost = data => {
