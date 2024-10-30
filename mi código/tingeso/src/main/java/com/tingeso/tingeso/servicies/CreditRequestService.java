@@ -68,6 +68,10 @@ public class CreditRequestService {
 
     public CreditRequestEntity updateStatus(Long id, String status) {
         CreditRequestEntity creditRequestEntity = getById(id);
+<<<<<<< HEAD
+=======
+        creditRequestEntity.setStatus(status);
+>>>>>>> 12f122871acf632d1a2f24b28618462649ea5aef
         return creditRequestRepository.save(creditRequestEntity);
     }
 

@@ -11,7 +11,6 @@ const CreditRequest = () => {
         creditAmount: '',
         deadline: '',
         interestRateYear: '',
-        maxAmount: '',
     });
 
     const [savedRequest, setSavedRequest] = useState(null);
@@ -163,16 +162,6 @@ const CreditRequest = () => {
                     />
                 </div>
 
-                <div>
-                    <label htmlFor="maxAmount">Monto Máximo:</label>
-                    <input 
-                        type="number" 
-                        id="maxAmount" 
-                        name="maxAmount" 
-                        value={formData.maxAmount} 
-                        onChange={handleChange}  
-                    />
-                </div>
 
 
                 {/* Agrega un botón para enviar */}
