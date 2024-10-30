@@ -37,11 +37,7 @@ public class CreditEvaluationService {
         creditEvaluationEntity.setCreditRequest(creditRequestEntity.get());
         creditEvaluationEntity.setAppropiateAge(creditEvaluation.isAppropiateAge());
         creditEvaluationEntity.setAntiquity(creditEvaluation.isAntiquity());
-<<<<<<< HEAD
         creditEvaluationEntity.setStatusEvaluation(creditEvaluation.getStatusEvaluation());
-=======
-        creditEvaluationEntity.setStatusEvaluation(creditEvaluation.isStatusEvaluation());
->>>>>>> 12f122871acf632d1a2f24b28618462649ea5aef
         creditEvaluationEntity.setSavingsCapacity(creditEvaluation.isSavingsCapacity());
         creditEvaluationEntity.setHistoryDICOM(creditEvaluation.isHistoryDICOM());
         creditEvaluationEntity.setRelationshipDebtIncome(creditEvaluation.isRelationshipDebtIncome());

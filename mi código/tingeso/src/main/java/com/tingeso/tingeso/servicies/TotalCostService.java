@@ -10,6 +10,7 @@ public class TotalCostService {
 
     //2. Cálculo de los Seguros
 
+    //TIENEN DISTINTOS PORCENTAJES
     public int calculateLifeInsurance (int monthDebth, float percentage){
         float lifeInsurance;
         float percentage100;
