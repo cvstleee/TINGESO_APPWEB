@@ -22,8 +22,6 @@ public class CreditRequestEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    //estado de la solicitud
-    private String status;
    //tipo de préstamo
     private String type;
     //monto del prestamo
@@ -33,9 +31,8 @@ public class CreditRequestEntity {
     //plazo, lo indica el ejecutivo según el máximo dispo en la tabla
     private int deadline; //plazo en meses, si son 20 años 240 meses
     //ejecutivo lo indica según tabla
-    private int interestRateYear; //anual
-    private int interestRateMonth;
-    private int maxAmount;
+    private double interestRateYear; //anual
+    private double interestRateMonth;
     //lo indica cliente
     private int lifeInsurance;
     private int fireInsurance;

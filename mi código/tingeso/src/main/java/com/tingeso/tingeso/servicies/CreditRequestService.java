@@ -49,7 +49,6 @@ public class CreditRequestService {
         creditRequestEntity.setCreditAmount(creditRequest.getCreditAmount());
         creditRequestEntity.setDeadline(creditRequest.getDeadline());
         creditRequestEntity.setInterestRateYear(creditRequest.getInterestRateYear());
-        creditRequestEntity.setMaxAmount(creditRequest.getMaxAmount());
         creditRequestEntity.setAdministrationFee(0);
         creditRequestEntity.setMonthCost(0);
         creditRequestEntity.setTotalCost(0);
@@ -67,6 +66,11 @@ public class CreditRequestService {
         return creditRequestRepository.save(creditRequestEntity);
     }
 
+    public CreditRequestEntity updateStatus(Long id, String status) {
+        CreditRequestEntity creditRequestEntity = getById(id);
+        return creditRequestRepository.save(creditRequestEntity);
+    }
+
 
     public boolean deleteCreditRequest(Long id) throws Exception {
         try {
@@ -77,25 +81,5 @@ public class CreditRequestService {
         }
     }
 
-    public void totalCosts(CostumerEntity costumer, int percentage, int fireInsurance, int monthsOfDeadline){
 
-        int monthDebth = creditSimulationService.simulationDebt(creditRequestRepository.findByCostumer(costumer).getCreditAmount(),
-                creditRequestRepository.findByCostumer(costumer).getInterestRateYear(), creditRequestRepository.findByCostumer(costumer).getDeadline());
-
-        creditRequestRepository.findByCostumer(costumer).setMonthDebth(monthDebth);
-
-        int lifeInsurance = totalCostService.calculateLifeInsurance(monthDebth, percentage);
-        creditRequestRepository.findByCostumer(costumer).setLifeInsurance(lifeInsurance);
-
-
-        int admiFee = totalCostService.calculateAdmiFee(monthDebth, percentage);
-        creditRequestRepository.findByCostumer(costumer).setAdministrationFee(admiFee);
-
-        int monthCost = totalCostService.monthlyCost(monthDebth, lifeInsurance, fireInsurance);
-        creditRequestRepository.findByCostumer(costumer).setMonthCost(monthCost);
-
-        int totalCost = totalCostService.totalCost(monthDebth,creditRequestRepository.findByCostumer(costumer).getDeadline(), admiFee);
-        creditRequestRepository.findByCostumer(costumer).setTotalCost(totalCost);
-
-    }
 }

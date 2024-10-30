@@ -4,6 +4,8 @@ import com.tingeso.tingeso.DTO.CreditRequest;
 import com.tingeso.tingeso.entities.CostumerEntity;
 import com.tingeso.tingeso.entities.CreditRequestEntity;
 import com.tingeso.tingeso.servicies.CreditRequestService;
+import com.tingeso.tingeso.servicies.CreditSimulationService;
+import com.tingeso.tingeso.servicies.TotalCostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,10 @@ import java.util.List;
 public class CreditRequestController {
     @Autowired
     CreditRequestService creditRequestService;
+    @Autowired
+    private TotalCostService totalCostService;
+    @Autowired
+    private CreditSimulationService creditSimulationService;
 
     @GetMapping("/")
     public ResponseEntity<List<CreditRequestEntity>> listCreditRequests() {
@@ -43,9 +49,9 @@ public class CreditRequestController {
     }
 
     @PutMapping("/status")
-    public ResponseEntity<CreditRequestEntity> updateCreditRequestStatus(@RequestBody CreditRequestEntity creditRequest, String status) {
-        creditRequest.setStatus(status);
-        return ResponseEntity.ok(creditRequestService.updateCreditRequest(creditRequest));
+    public ResponseEntity<CreditRequestEntity> updateCreditRequestStatus(@RequestBody CreditRequestEntity creditRequest, @RequestParam String status) {
+        Long id = creditRequest.getId();
+        return ResponseEntity.ok(creditRequestService.updateStatus(id, status));
     }
 
     @DeleteMapping("/{id}")
@@ -56,9 +62,55 @@ public class CreditRequestController {
     }
 
     @PutMapping("/calculateTotalCost/{id}")
-    public ResponseEntity<CreditRequestEntity> calculateTotalCost(@RequestBody CostumerEntity costumer, int percentage, int fireInsurance, int monthsOfDeadline){
-         creditRequestService.totalCosts(costumer, percentage, fireInsurance, monthsOfDeadline);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<CreditRequestEntity> calculateTotalCost(
+            @PathVariable Long id,
+            @RequestParam int loanAmount,
+            @RequestParam double anualInterestRate,
+            @RequestParam int termInYears,
+            @RequestParam int fireInsurance,
+            @RequestParam float percentage) {
+
+        // Obtener la solicitud de crédito por su ID
+        CreditRequestEntity creditRequest = creditRequestService.getById(id);
+        if (creditRequest == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        //setters de creditAmount, deadline (termInMonths), interestRateMonth, interestRateYear, maxAmount
+        creditRequest.setDeadline(termInYears * 12);
+        creditRequest.setCreditAmount(loanAmount);
+        creditRequest.setInterestRateYear(anualInterestRate);
+
+        double monthlyInterestRate = (anualInterestRate / 100) / 12;
+        creditRequest.setInterestRateMonth(monthlyInterestRate);
+
+
+
+        // 1. Cálculo de cuota mensual
+        int monthDebth = creditSimulationService.simulationDebt(loanAmount, anualInterestRate, termInYears);
+        creditRequest.setMonthDebth(monthDebth);
+
+        // 2. Cálculos de seguros
+        int lifeInsurance = totalCostService.calculateLifeInsurance(monthDebth, percentage);
+        creditRequest.setLifeInsurance(lifeInsurance);
+        creditRequest.setFireInsurance(fireInsurance);
+
+        // 3. Cálculo de comisión de administración
+        int admiFee = totalCostService.calculateAdmiFee(monthDebth, percentage);
+        creditRequest.setAdministrationFee(admiFee);
+
+        // 4. Cálculo de costos totales y mensuales
+        int monthlyCost = totalCostService.monthlyCost(monthDebth, lifeInsurance, fireInsurance);
+        creditRequest.setMonthCost(monthlyCost);
+        int totalCost = totalCostService.totalCost(monthDebth, termInYears, admiFee);
+        creditRequest.setTotalCost(totalCost);
+
+        // Guardar los cambios en la base de datos
+        creditRequestService.updateCreditRequest(creditRequest); // Asegúrate de que el servicio tenga este método
+
+        return ResponseEntity.ok(creditRequest); // Retorna el objeto actualizado
     }
+
+
 
 }

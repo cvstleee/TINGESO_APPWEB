@@ -23,13 +23,14 @@ public class CreditEvaluationEntity {
     private Long id;
     //Reglas de negocio
     private boolean relationshipFeeIncome;
+    private boolean appropiateAge;
     private boolean historyDICOM;
     private boolean antiquity;
     private boolean relationshipDebtIncome;
     //private boolean maxAmount;
     private boolean savingsCapacity;
     //juntar con credit request
-    private boolean statusEvaluation;
+    private String statusEvaluation;
 
     //todas son uno a uno
     //unido al creditRequest (x el maxamount)
@@ -45,11 +46,6 @@ public class CreditEvaluationEntity {
     @JsonIgnore
     @JoinColumn(name = "creditRequest_id" , referencedColumnName = "id")
     private CreditRequestEntity creditRequest;
-
-    @OneToOne
-    @JsonIgnore
-    @JoinColumn(name = "savingCapacity_id" , referencedColumnName = "id")
-    private SavingCapacityEntity savingCapacity;
 
     @ManyToOne
     @JsonIgnore
