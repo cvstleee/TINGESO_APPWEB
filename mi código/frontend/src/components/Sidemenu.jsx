@@ -69,29 +69,6 @@ export default function Sidemenu({ open, toggleDrawer }) {
           <ListItemText primary="Cálculo de Costos Totales" />
         </ListItemButton>
       </List>
-
-      <Divider />
-
-      <List>
-        <ListItemButton onClick={() => navigate("/employee/discounts")}>
-          <ListItemIcon>
-            <DiscountIcon />
-          </ListItemIcon>
-          <ListItemText primary="Descuentos" />
-        </ListItemButton>
-        <ListItemButton onClick={() => navigate("/paycheck/vacations")}>
-          <ListItemIcon>
-            <HailIcon />
-          </ListItemIcon>
-          <ListItemText primary="Vacaciones" />
-        </ListItemButton>
-        <ListItemButton onClick={() => navigate("/paycheck/medicalleave")}>
-          <ListItemIcon>
-            <MedicationLiquidIcon />
-          </ListItemIcon>
-          <ListItemText primary="Licencias Medicas" />
-        </ListItemButton>
-      </List>
     </Box>
   );
 

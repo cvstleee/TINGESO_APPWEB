@@ -43,25 +43,32 @@ useEffect(() => {
   // Maneja el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!selectedCreditRequestId) {
       setError("Por favor, selecciona una solicitud de crédito.");
       return;
     }
-
+  
+    const params = new URLSearchParams({
+      loanAmount: formData.loanAmount,
+      anualInterestRate: formData.anualInterestRate,
+      termInYears: formData.termInYears,
+      fireInsurance: formData.fireInsurance,
+      percentage: formData.percentage
+    });
+  
     try {
-      const response = await fetch(`/calculateTotalCost/${selectedCreditRequestId}`, {
+      const response = await fetch(`http://localhost:8090/creditRequest/calculateTotalCost/${selectedCreditRequestId}?${params.toString()}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+        }
       });
-
+  
       if (!response.ok) {
         throw new Error('Error en la solicitud');
       }
-
+  
       const data = await response.json();
       setCreditData(data);
       setError(null);
@@ -69,7 +76,7 @@ useEffect(() => {
       setError(error.message);
     }
   };
-
+  
   return (
     <div>
       <h3>Calcular Costo Total de Crédito</h3>
@@ -81,7 +88,7 @@ useEffect(() => {
           <option value="">-- Selecciona una opción --</option>
           {creditRequests.map((creditRequest) => (
             <option key={creditRequest.id} value={creditRequest.id}>
-              {creditRequest.id} - {creditRequest.description}
+              {creditRequest.id} 
             </option>
           ))}
         </select>

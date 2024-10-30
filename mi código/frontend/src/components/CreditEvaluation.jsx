@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import creditRequestService from '../services/creditRequest.service';
-import UpdateCreditRequestStatus from './UpdateCreditRequestStatus';
+
 
 const CreditEvaluation = () => {
     const [evaluation, setEvaluation] = useState({
@@ -10,9 +10,8 @@ const CreditEvaluation = () => {
         antiquity: false,
         relationshipDebtIncome: false,
         savingsCapacity: false,
-        statusEvaluation: false,
-        creditRequestId: '',
-        status: ''
+        statusEvaluation: '',
+        creditRequestId: ''
     });
 
     const [creditRequests, setCreditRequests] = useState([]);
@@ -67,23 +66,6 @@ const CreditEvaluation = () => {
         }
     };
 
-    const handleStatusChange = () => {
-        /**const updatedCreditRequest = {
-            id: evaluation.creditRequestId, // ID de la solicitud
-            status: evaluation.status,       // Nuevo estado
-            // Agregar otros campos necesarios aquí si es necesario
-        };**/
-
-        creditRequestService.updateStatus(evaluation.creditRequestId, evaluation.status)
-            .then(data => {
-                console.log('Estado modificado:', data);
-                // Aquí puedes agregar lógica adicional, como actualizar el estado local o mostrar una notificación
-            })
-            .catch(error => {
-                console.error('Error al modificar estado:', error);
-                // Manejo de errores, como mostrar un mensaje al usuario
-            });
-    };
 
     return (
         <div>
@@ -190,9 +172,9 @@ const CreditEvaluation = () => {
             {/* Menú desplegable para cambiar el estado */}
             <label htmlFor="status">Modificar Estado:</label>
             <select 
-                id="status" 
-                name="status"
-                value={evaluation.status}
+                id="statusEvaluation" 
+                name="statusEvaluation"
+                value={evaluation.statusEvaluation}
                 onChange={handleChange} 
                 required
             >
@@ -204,12 +186,7 @@ const CreditEvaluation = () => {
             </div>
 
             
-            <button onClick={handleStatusChange}>Modificar Estado</button>
 
-            <UpdateCreditRequestStatus 
-                creditRequestId={evaluation.creditRequestId} 
-                status={evaluation.status} 
-            />
 
 
         </div>
