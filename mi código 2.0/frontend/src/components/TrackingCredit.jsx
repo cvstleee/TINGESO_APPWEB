@@ -38,7 +38,7 @@ const TrackingCredit = () => {
             // Obtener statusEvaluation de CreditEvaluation
             const fetchCreditEvaluation = async () => {
                 try {
-                    const response = await creditEvaluationService.get(selectedRequestId); // Utiliza el mismo ID
+                    const response = await creditEvaluationService.get(selectedRequestId); // Utiliza el mismo ID, en el docker esto se desconfigura ojo
                     setStatusEvaluation(response.data.statusEvaluation);
                 } catch (error) {
                     console.error("Error fetching credit evaluation:", error);

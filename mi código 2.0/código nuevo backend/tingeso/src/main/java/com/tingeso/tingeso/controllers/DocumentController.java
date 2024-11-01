@@ -30,11 +30,6 @@ public class DocumentController {
         return ResponseEntity.ok(document);
     }
 
-    /**@PostMapping("/")
-    public ResponseEntity<DocumentEntity> saveDocument(@RequestBody DocumentEntity document) {
-        DocumentEntity documentNew = documentService.saveDocument(document);
-        return ResponseEntity.ok(documentNew);
-    }**/
 
     @PostMapping("/")
     public ResponseEntity<DocumentEntity> saveDocument(@RequestParam("file") MultipartFile file,
