@@ -14,11 +14,10 @@ pipeline{
             steps{
                 dir("trabajo-tingeso/frontend"){
                     script{
-                        withCredentials([string(credentialsId: 'cvstleee', variable: 'Aylin406#')]) {
-                        bat 'docker login -u cvstleee -p %Aylin406#%'
-                        }
+                         withDockerRegistry(credentialsId: 'docker-credentials'){
                             bat "docker build -t cvstleee/tingesofrontend ."
                             bat "docker push cvstleee/tingesofrontend"
+                        }
                     }                    
                 }
             }
