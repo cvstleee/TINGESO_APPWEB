@@ -1,59 +1,66 @@
-pipeline{
+pipeline {
     agent any
-    tools{
+    tools {
         maven "maven"
-
     }
-    stages{
-        stage("Build JAR File"){
-            steps{
+    stages {
+        stage("Checkout Code") {
+            steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cvstleee/TINGESO_APPWEB']])
-                dir("trabajo-tingeso/backend/tingeso"){
+            }
+        }
+        stage("Build JAR File") {
+            steps {
+                dir("trabajo-tingeso/backend/tingeso") {
                     bat "mvn clean install"
                 }
             }
         }
-        stage("Test"){
-            steps{
-                dir("trabajo-tingeso/backend/tingeso"){
+        stage("Test") {
+            steps {
+                dir("trabajo-tingeso/backend/tingeso") {
                     bat "mvn test"
                 }
             }
         }        
-        stage("Build and Push Docker Image"){
-            steps{
-                dir("trabajo-tingeso/backend/tingeso"){
+        stage("Build and Push Backend Docker Image") {
+            steps {
+                dir("trabajo-tingeso/backend/tingeso") {
                     withCredentials([string(credentialsId: 'dockerpass', variable: 'dhpsw')]) {
-                    script {
-                         bat 'docker login -u cvstleee -p %dhpsw%'
-                         bat 'docker build -t cvstleee/tingesobackend:latest .'
-                         bat 'docker push cvstleee/tingesobackend:latest'
-                    }
-                }                  
+                        script {
+                            bat 'docker login -u cvstleee -p %dhpsw%'
+                            bat 'docker build -t cvstleee/tingesobackend:latest .'
+                            bat 'docker push cvstleee/tingesobackend:latest'
+                        }
+                    }                  
                 }
             }
         }
-    stage("Build Frontend"){
-            steps{
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cvstleee/TINGESO_APPWEB']])
-                dir("trabajo-tingeso/frontend"){
+        stage("Build Frontend") {
+            steps {
+                dir("trabajo-tingeso/frontend") {
                     bat "npm install"
                     bat "npm run build"
                 }
             }
         }
-        stage("Build and Push Docker Image"){
-            steps{
-                 dir("trabajo-tingeso/frontend"){
+        stage("Build and Push Frontend Docker Image") {
+            steps {
+                dir("trabajo-tingeso/frontend") {
                     withCredentials([string(credentialsId: 'dockerpass', variable: 'dhpsw')]) {
-                    script {
-                         bat 'docker login -u cvstleee -p %dhpsw%'
-                         bat 'docker build -t cvstleee/tingesofrontend:latest .'
-                         bat 'docker push cvstleee/tingesofrontend:latest'
-                    }
-                }                  
+                        script {
+                            bat 'docker login -u cvstleee -p %dhpsw%'
+                            bat 'docker build -t cvstleee/tingesofrontend:latest .'
+                            bat 'docker push cvstleee/tingesofrontend:latest'
+                        }
+                    }                  
                 }
             }
+        }
+    }
+    post {
+        always {
+            echo 'Pipeline completed.'
         }
     }
 }
