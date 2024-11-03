@@ -26,8 +26,30 @@ pipeline{
                     withCredentials([string(credentialsId: 'dockerpass', variable: 'dhpsw')]) {
                     script {
                          bat 'docker login -u cvstleee -p %dhpsw%'
-                         bat 'docker build -t cvstleee/tingeso .'
-                         bat 'docker push cvstleee/tingeso'
+                         bat 'docker build -t cvstleee/tingesobackend:latest .'
+                         bat 'docker push cvstleee/tingesobackend:latest'
+                    }
+                }                  
+                }
+            }
+        }
+    stage("Build Frontend"){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cvstleee/TINGESO_APPWEB']])
+                dir("trabajo-tingeso/frontend"){
+                    bat "npm install"
+                    bat "npm run build"
+                }
+            }
+        }
+        stage("Build and Push Docker Image"){
+            steps{
+                 dir("trabajo-tingeso/frontend"){
+                    withCredentials([string(credentialsId: 'dockerpass', variable: 'dhpsw')]) {
+                    script {
+                         bat 'docker login -u cvstleee -p %dhpsw%'
+                         bat 'docker build -t cvstleee/tingesofrontend:latest .'
+                         bat 'docker push cvstleee/tingesofrontend:latest'
                     }
                 }                  
                 }
