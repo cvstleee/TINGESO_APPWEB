@@ -23,12 +23,13 @@ pipeline{
         stage("Build and Push Docker Image"){
             steps{
                 dir("trabajo-tingeso/backend/tingeso"){
-                    script{
-                         withDockerRegistry(credentialsId: 'docker-credentials'){
-                            bat "docker build -t cvstleee/tingesobackend ."
-                            bat "docker push cvstleee/tingesobackend"
-                        }
-                    }                    
+                    withCredentials([string(credentialsId: 'docker-credentials', variable: 'dhpsw')]) {
+                    script {
+                         bat 'docker login -u cvstleee -p %dhpsw%'
+                         bat 'docker build -t cvstleee/tingeso .'
+                         bat 'docker push cvstleee/tingeso'
+                    }
+                }                  
                 }
             }
         }
