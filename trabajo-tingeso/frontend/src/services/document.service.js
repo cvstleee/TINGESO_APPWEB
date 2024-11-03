@@ -4,9 +4,13 @@ const getAll = () => {
     return httpClient.get('/document/');
 }
 
-const create = data => {
-    return httpClient.post("/document/", data);
-}
+const create = (data) => {
+    return httpClient.post("/document/", data, {
+        headers: {
+            'Content-Type': 'multipart/formData' 
+        }
+    });
+};
 
 const get = id => {
     return httpClient.get(`/document/${id}`);

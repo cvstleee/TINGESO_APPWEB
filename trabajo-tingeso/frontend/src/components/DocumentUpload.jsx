@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import documentService from '../services/document.service';
 
 const DocumentUpload = ({ creditRequestId }) => {
     const [files, setFiles] = useState([]);
@@ -13,35 +14,28 @@ const DocumentUpload = ({ creditRequestId }) => {
 
     const handleUpload = async (e) => {
         e.preventDefault(); // Previene la recarga de la página
-
+    
         const formData = new FormData();
         files.forEach(file => {
             formData.append('file', file); // Agrega cada archivo al FormData
         });
-
+    
         // Agrega tipo, título y ID de la solicitud de crédito
         formData.append('type', type);
         formData.append('title', title);
         formData.append('creditRequestId', creditRequestId); // Este es para asociar con la solicitud
-
+    
         try {
-            const response = await fetch('http://localhost:8090/document/', { // Cambia a tu URL real
-                method: 'POST',
-                body: formData // Envía FormData directamente
-            });
-
-            if (!response.ok) {
-                throw new Error('Error al subir documentos');
-            }
-
-            const result = await response.json();
-            console.log('Documentos subidos:', result);
+            const result = await documentService.create(formData); // Llama al servicio create con formData
+            console.log('Documentos subidos:', result.data);
             setSuccessMessage('Documentos subidos con éxito');
             setErrorMessage('');
+            
             // Limpiar campos después de subir
             setFiles([]);
             setType('');
             setTitle('');
+            
         } catch (error) {
             console.error('Error:', error.message);
             setErrorMessage(error.message);

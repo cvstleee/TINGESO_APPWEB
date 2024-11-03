@@ -9,6 +9,6 @@ public class CreditRequest {
     private String type;
     private int creditAmount;
     private int deadline;
-    private int interestRateYear;
+    private double interestRateYear;
     private int maxAmount;
 }

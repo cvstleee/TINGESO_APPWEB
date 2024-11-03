@@ -35,46 +35,36 @@ useEffect(() => {
     });
   };
 
-  // Maneja la selección de una solicitud de crédito existente
-  const handleCreditRequestChange = (e) => {
-    setSelectedCreditRequestId(e.target.value);
-  };
+    // Maneja la selección de una solicitud de crédito existente
+    const handleCreditRequestChange = (e) => {
+      setSelectedCreditRequestId(e.target.value);
+    };
 
-  // Maneja el envío del formulario
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    if (!selectedCreditRequestId) {
-      setError("Por favor, selecciona una solicitud de crédito.");
-      return;
-    }
-  
-    const params = new URLSearchParams({
-      loanAmount: formData.loanAmount,
-      anualInterestRate: formData.anualInterestRate,
-      termInYears: formData.termInYears,
-      fireInsurance: formData.fireInsurance,
-      percentage: formData.percentage
-    });
-  
-    try {
-      const response = await fetch(`http://localhost:8090/creditRequest/calculateTotalCost/${selectedCreditRequestId}?${params.toString()}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-  
-      if (!response.ok) {
-        throw new Error('Error en la solicitud');
+    // Maneja el envío del formulario
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      if (!selectedCreditRequestId) {
+          setError("Por favor, selecciona una solicitud de crédito.");
+          return;
       }
-  
-      const data = await response.json();
-      setCreditData(data);
-      setError(null);
-    } catch (error) {
-      setError(error.message);
-    }
+
+      const params = new URLSearchParams({
+          loanAmount: formData.loanAmount,
+          anualInterestRate: formData.anualInterestRate,
+          termInYears: formData.termInYears,
+          fireInsurance: formData.fireInsurance,
+          percentage: formData.percentage
+      });
+
+      try {
+          const data = await creditRequestService.totalCost(selectedCreditRequestId, params); // Llama al servicio calculateTotalCost
+
+          setCreditData(data.data);
+          setError(null);
+      } catch (error) {
+          setError(error.message);
+      }
   };
   
   return (

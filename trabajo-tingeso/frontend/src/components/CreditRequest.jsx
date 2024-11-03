@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import costumerService from '../services/costumer.service'; // Asegúrate de que este servicio esté correctamente implementado
 import employeeService from '../services/employee.service';
 import DocumentUpload from './DocumentUpload'; 
+import creditRequestService from '../services/creditRequest.service';
 
 const CreditRequest = () => {
     const [formData, setFormData] = useState({
@@ -27,28 +28,15 @@ const CreditRequest = () => {
         });
     };
 
-    // Maneja el envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault(); // Previene la recarga de la página
-
+    
         try {
-            const response = await fetch('http://localhost:8090/creditRequest/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData) // Envía los datos como JSON
-            });
-
-            if (!response.ok) {
-                throw new Error('Error en la solicitud');
-            }
-
-            const result = await response.json();
+            const result = await creditRequestService.create(formData); // Llama al servicio create con formData
             console.log('Solicitud de crédito guardada:', result);
-            setSavedRequest(result); // Almacena la solicitud guardada
+            setSavedRequest(result.data); // Almacena la solicitud guardada
             setErrorMessage('');
-
+            
         } catch (error) {
             console.error('Error:', error.message);
             setErrorMessage(error.message);

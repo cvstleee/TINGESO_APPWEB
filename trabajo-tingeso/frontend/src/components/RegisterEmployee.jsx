@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import employeeService from '../services/employee.service';
 
 const RegisterEmployee = () => {
   // Estado para almacenar los valores del formulario
@@ -21,30 +22,17 @@ const RegisterEmployee = () => {
     });
   };
 
-  // Función para manejar el envío del formulario
+  // Función para manejar el envío del formulario de empleados
   const handleSubmit = async (e) => {
     e.preventDefault(); // Previene la recarga de la página
 
     try {
-      // Enviar la solicitud POST a la API
-      const response = await fetch('http://localhost:8090/employee/', { // Reemplaza con tu URL
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData) // Convierte el objeto a JSON
-      });
-
-      if (!response.ok) {
-        throw new Error('Error en la solicitud');
-      }
-
-      const result = await response.json();
-      console.log('Empleado guardado:', result);
-      setSavedEmployee(result); // Almacena el empleado guardado en el estado
+        const result = await employeeService.create(formData); // Llama al servicio createEmployee con formData
+        console.log('Empleado guardado:', result);
+        setSavedEmployee(result.data); // Almacena el empleado guardado en el estado
 
     } catch (error) {
-      console.error('Error:', error);
+        console.error('Error:', error);
     }
   };
 

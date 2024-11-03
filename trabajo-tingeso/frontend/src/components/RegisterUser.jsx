@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import costumerService from '../services/costumer.service';
 
 const RegisterUser = () => {
   // Estado para almacenar los valores del formulario
@@ -25,33 +26,21 @@ const RegisterUser = () => {
   };
 
   // Función para manejar el envío del formulario
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Previene la recarga de la página
+ // Función para manejar el envío del formulario de clientes
+const handleSubmit = async (e) => {
+  e.preventDefault(); // Previene la recarga de la página
 
-    try {
-      // Enviar la solicitud POST a la API
-      const response = await fetch('http://localhost:8090/costumer/', { // Cambia a tu URL real
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData) // Convierte el objeto a JSON
-      });
-
-      if (!response.ok) {
-        throw new Error('Error en la solicitud');
-      }
-
-      const result = await response.json();
+  try {
+      const result = await costumerService.create(formData); // Llama al servicio createCustomer con formData
       console.log('Usuario guardado:', result);
-      setSavedUser(result); // Almacena el usuario guardado en el estado
+      setSavedUser(result.data); // Almacena el usuario guardado en el estado
       setErrorMessage(''); // Limpiar mensajes de error
 
-    } catch (error) {
+  } catch (error) {
       console.error('Error:', error.message);
       setErrorMessage(error.message); // Mostrar mensaje de error en caso de falla
-    }
-  };
+  }
+};
 
   return (
     <div>

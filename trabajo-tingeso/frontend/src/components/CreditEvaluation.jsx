@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import creditRequestService from '../services/creditRequest.service';
+import creditEvaluationService from '../services/creditEvaluation.service';
 
 
 const CreditEvaluation = () => {
@@ -50,14 +51,7 @@ const CreditEvaluation = () => {
     const handleSubmit = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch('http://localhost:8090/creditEvaluation/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(evaluation),
-            });
-            const data = await response.json();
+            const data = await creditEvaluationService.create(evaluation);
             console.log('Evaluación guardada:', data);
         } catch (error) {
             console.error('Error:', error);
@@ -65,7 +59,6 @@ const CreditEvaluation = () => {
             setIsLoading(false);
         }
     };
-
 
     return (
         <div>

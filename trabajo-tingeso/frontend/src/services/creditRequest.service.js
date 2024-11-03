@@ -28,8 +28,9 @@ const updateStatus = (creditRequest, status) => {
     return httpClient.put('/creditRequest/status', creditRequest);
 }
 
-const totalCost = data => {
-    return httpClient.put(`/creditRequest/calculateTotalCost/${id}`, data);
-}
+const totalCost = (creditRequestId, params) => {
+    const url = `/creditRequest/calculateTotalCost/${creditRequestId}?${params.toString()}`;
+    return httpClient.put(url, null); // Asumiendo que httpClient tiene un método put
+};
 
 export default { getAll, create, get, update, remove, totalCost, updateStatus };

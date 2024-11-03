@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import costumerService from '../services/costumer.service';
 
 const Simulation = () => {
   // Estado para almacenar los valores del formulario
@@ -25,28 +26,17 @@ const Simulation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Previene la recarga de la página
 
-    try {
-      // Enviar la solicitud GET a la API
-      const response = await fetch(`http://localhost:8090/costumer/simulate?P=${formData.loanAmount}&r=${formData.anualInterestRate}&n=${formData.termInYears}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      try {
+          const result = await costumerService.simulation(formData.loanAmount, formData.anualInterestRate, formData.termInYears); // Llama al servicio getSimulation
 
-      if (!response.ok) {
-        throw new Error('Error en la solicitud');
+          console.log('Resultado de la simulación de crédito hipotecario:', result.data);
+          setSimulationResult(result.data); // Almacena el resultado de la simulación en el estado
+          setErrorMessage(''); // Limpiar mensajes de error
+
+      } catch (error) {
+          console.error('Error:', error.message);
+          setErrorMessage(error.message); // Mostrar mensaje de error en caso de falla
       }
-
-      const result = await response.json();
-      console.log('Resultado de la simulación de crédito hipotecario:', result);
-      setSimulationResult(result); // Almacena el resultado de la simulación en el estado
-      setErrorMessage(''); // Limpiar mensajes de error
-
-    } catch (error) {
-      console.error('Error:', error.message);
-      setErrorMessage(error.message); // Mostrar mensaje de error en caso de falla
-    }
   };
 
   return (
