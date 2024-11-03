@@ -20,7 +20,7 @@ public class CostumerService {
     }
 
     public CostumerEntity getById(Long id) {
-        return costumerRepository.findById(id).get();
+        return costumerRepository.findById(id).orElse(null);
     }
 
     public CostumerEntity updateCostumer(CostumerEntity costumer) {
