@@ -67,7 +67,7 @@ const Simulation = () => {
           />
         </div>
         <div>
-          <label htmlFor="termInYears">Plazo en Años:</label>
+          <label htmlFor="termInYears">Plazo en Años (Meses):</label>
           <input 
             type="number" 
             id="termInYears" 
